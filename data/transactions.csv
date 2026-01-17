@@ -1,0 +1,4 @@
+TransactionID,BookID,MemberID,Date,Type
+T001,B001,M001,2023-10-01,Issue
+T002,B001,M001,2023-10-15,Return
+T003,B002,M002,2023-11-05,Issue

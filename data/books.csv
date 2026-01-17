@@ -1,0 +1,6 @@
+BookID,Title,Author,Category,Year,Status
+B001,The Great Gatsby,F. Scott Fitzgerald,Fiction,1925,Available
+B002,1984,George Orwell,Dystopian,1949,Available
+B003,Python Crash Course,Eric Matthes,Education,2019,Available
+B004,Clean Code,Robert C. Martin,Technology,2008,Available
+B005,Sapiens,Yuval Noah Harari,History,2011,Available
