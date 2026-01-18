@@ -8,7 +8,14 @@
 </div>
 
 <div class="card p-3 mb-4">
-    <input type="text" id="memberSearch" class="form-control" placeholder="🔍 Search Member Name or ID...">
+    <div class="row align-items-center">
+        <div class="col-md-9">
+            <input type="text" id="memberSearch" class="form-control" placeholder="🔍 Search Member Name or ID...">
+        </div>
+        <div class="col-md-3 text-end">
+            <a href="/add_member" class="btn btn-success w-100">+ Add Member</a>
+        </div>
+    </div>
 </div>
 
 <div class="card">
@@ -33,24 +40,33 @@
                     <td><a href="/member/{{ m.MemberID }}" class="btn btn-sm btn-outline-primary">View History</a></td>
                 </tr>
                 {% endfor %}
+                <tr id="noResults" style="display: none;">
+                    <td colspan="5" class="text-center text-muted py-4">No members found matching your criteria.</td>
+                </tr>
             </tbody>
         </table>
     </div>
 </div>
 
 <script>
+    const noResultsRow = document.getElementById('noResults');
+
     document.getElementById('memberSearch').addEventListener('input', function (e) {
         const term = e.target.value.toLowerCase();
+        let visibleCount = 0;
+
         document.querySelectorAll('.member-row').forEach(row => {
             const name = row.querySelector('.member-name').textContent.toLowerCase();
             const id = row.querySelector('.member-id').textContent.toLowerCase();
 
             if (name.includes(term) || id.includes(term)) {
                 row.style.display = '';
+                visibleCount++;
             } else {
                 row.style.display = 'none';
             }
         });
+        noResultsRow.style.display = visibleCount === 0 ? '' : 'none';
     });
 </script>
 {% endblock %}

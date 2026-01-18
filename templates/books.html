@@ -6,6 +6,7 @@
         <h2>Inventory</h2>
     </div>
     <div class="col-md-6 text-end">
+        <a href="/add_book" class="btn btn-success me-2">+ Add Book</a>
         <a href="/issue" class="btn btn-primary">+ Issue Book</a>
     </div>
 </div>
@@ -37,34 +38,39 @@
 
 <div class="card">
     <div class="card-body">
-        <table class="table table-hover" id="booksTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Department</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for book in books %}
-                <tr class="book-row" data-dept="{{ book.Department }}" data-status="{{ book.Status }}">
-                    <td><code>{{ book.BookID }}</code></td>
-                    <td class="book-title">{{ book.Title }}</td>
-                    <td class="book-author">{{ book.Author }}</td>
-                    <td><span class="badge bg-light text-dark border">{{ book.Department }}</span></td>
-                    <td>
-                        {% if book.Status == 'Issued' %}
-                        <span class="badge bg-warning text-dark">Issued</span>
-                        {% else %}
-                        <span class="badge bg-success">Available</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-hover" id="booksTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr class="book-row" data-dept="{{ book.Department }}" data-status="{{ book.Status }}">
+                        <td><code>{{ book.BookID }}</code></td>
+                        <td class="book-title">{{ book.Title }}</td>
+                        <td class="book-author">{{ book.Author }}</td>
+                        <td><span class="badge bg-light text-dark border">{{ book.Department }}</span></td>
+                        <td>
+                            {% if book.Status == 'Issued' %}
+                            <span class="badge bg-warning text-dark">Issued</span>
+                            {% else %}
+                            <span class="badge bg-success">Available</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr id="noResults" style="display: none;">
+                        <td colspan="6" class="text-center text-muted py-4">No books found matching your criteria.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -74,10 +80,13 @@
     const statusFilter = document.getElementById('statusFilter');
     const rows = document.querySelectorAll('.book-row');
 
+    const noResultsRow = document.getElementById('noResults');
+
     function filterBooks() {
         const term = searchInput.value.toLowerCase();
         const dept = departmentFilter.value;
         const status = statusFilter.value;
+        let visibleCount = 0;
 
         rows.forEach(row => {
             const title = row.querySelector('.book-title').textContent.toLowerCase();
@@ -92,10 +101,12 @@
 
             if (matchesSearch && matchesDept && matchesStatus) {
                 row.style.display = '';
+                visibleCount++;
             } else {
                 row.style.display = 'none';
             }
         });
+        noResultsRow.style.display = visibleCount === 0 ? '' : 'none';
     }
 
     searchInput.addEventListener('input', filterBooks);

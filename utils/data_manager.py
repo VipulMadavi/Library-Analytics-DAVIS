@@ -25,6 +25,11 @@ def save_transactions(transactions_df):
 def add_new_book(data):
     """Adds a new book if ID is unique."""
     books, _, _ = load_data()
+    
+    # Tiny Safety: Check for empty strings
+    if not data['BookID'] or not data['Title'] or not data['Author']:
+        return False, "All fields are required."
+
     if data['BookID'] in books['BookID'].values:
         return False, "Book ID already exists."
     
@@ -44,6 +49,11 @@ def add_new_book(data):
 def add_new_member(data):
     """Adds a new member if ID is unique."""
     _, members, _ = load_data()
+    
+    # Tiny Safety: Check for empty strings
+    if not data['MemberID'] or not data['Name']:
+        return False, "ID and Name are required."
+
     if data['MemberID'] in members['MemberID'].values:
         return False, "Member ID already exists."
         
@@ -203,7 +213,7 @@ def get_member_current_loans(member_id):
                 
     # Now loans contains only active books
     active_loans = []
-    from utils.data_manager import load_data # inner import to avoid circular if any (safe here)
+    # Removed inner import causing UnboundLocalError
     books, _, _ = load_data()
     today = datetime.now().date()
     
