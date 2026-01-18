@@ -20,31 +20,55 @@
 
 <div class="card">
     <div class="card-body">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Department</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for m in members %}
-                <tr class="member-row" style="cursor: pointer;" onclick="window.location='/member/{{ m.MemberID }}'">
-                    <td class="member-id"><code>{{ m.MemberID }}</code></td>
-                    <td><strong class="member-name">{{ m.Name }}</strong></td>
-                    <td><span class="badge bg-secondary">{{ m.Role }}</span></td>
-                    <td>{{ m.Department }}</td>
-                    <td><a href="/member/{{ m.MemberID }}" class="btn btn-sm btn-outline-primary">View History</a></td>
-                </tr>
-                {% endfor %}
-                <tr id="noResults" style="display: none;">
-                    <td colspan="5" class="text-center text-muted py-4">No members found matching your criteria.</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in members %}
+                    <tr class="member-row" data-role="{{ m.Role }}" data-dept="{{ m.Department }}"
+                        style="cursor: pointer;" onclick="window.location='/member/{{ m.MemberID }}'">
+                        <td class="member-id"><code>{{ m.MemberID }}</code></td>
+                        <td><strong class="member-name">{{ m.Name }}</strong></td>
+                        <td><span class="badge bg-secondary">{{ m.Role }}</span></td>
+                        <td>{{ m.Department }}</td>
+                        <td>
+                            <a href="/member/{{ m.MemberID }}" class="btn btn-sm btn-outline-primary">View</a>
+                            <a href="/delete/member/{{ m.MemberID }}" class="btn btn-sm btn-outline-danger"
+                                onclick="event.stopPropagation(); return confirm('Delete member {{ m.Name }}?');">Del</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr id="noResults" style="display: none;">
+                        <td colspan="5" class="text-center text-muted py-4">No members found matching your criteria.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination control -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div>
+                {% if has_prev %}
+                <a href="{{ url_for('members_page', page=page-1) }}" class="btn btn-sm btn-outline-secondary">←
+                    Previous</a>
+                {% endif %}
+            </div>
+            <span class="text-muted">Page {{ page }}</span>
+            <div>
+                {% if has_next %}
+                <a href="{{ url_for('members_page', page=page+1) }}" class="btn btn-sm btn-outline-secondary">Next →</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
 </div>
 

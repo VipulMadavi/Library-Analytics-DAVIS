@@ -1,13 +1,13 @@
 BookID,Title,Author,Department,Status
-B001,Introduction to Algorithms,Thomas H. Cormen,Computer Engineering,Issued
-B002,Operating System Concepts,Abraham Silberschatz,Computer Engineering,Available
+B001,Introduction to Algorithms,Thomas H. Cormen,Computer Engineering,Available
+B002,Operating System Concepts,Abraham Silberschatz,Computer Engineering,Issued
 B003,Computer Networks,Andrew S. Tanenbaum,Computer Engineering,Issued
-B004,Database System Concepts,Henry F. Korth,Information Technology,Available
-B005,Artificial Intelligence A Modern Approach,Stuart Russell,Computer Engineering,Issued
+B004,Database System Concepts,Henry F. Korth,Information Technology,Issued
+B005,Artificial Intelligence A Modern Approach,Stuart Russell,Computer Engineering,Available
 B006,Digital Logic Design,M. Morris Mano,Electronics Engineering,Available
-B007,Engineering Mathematics,K A Stroud,Mechanical Engineering,Issued
+B007,Engineering Mathematics,K A Stroud,Mechanical Engineering,Available
 B008,Software Engineering,Ian Sommerville,Information Technology,Available
-B009,Clean Code,Robert C Martin,Computer Engineering,Issued
+B009,Clean Code,Robert C Martin,Computer Engineering,Available
 B010,Python Programming,Reema Thareja,Computer Engineering,Available
 B011,Data Science from Scratch,Joel Grus,Information Technology,Available
-B012,Machine Learning,Tom M Mitchell,Computer Engineering,Issued
+B012,Machine Learning,Tom M Mitchell,Computer Engineering,Available

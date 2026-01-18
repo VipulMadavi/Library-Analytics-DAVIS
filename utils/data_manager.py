@@ -233,3 +233,39 @@ def get_member_current_loans(member_id):
         })
         
     return active_loans
+
+def delete_book(book_id):
+    """
+    Deletes a book if it is NOT currently issued.
+    """
+    books, _, _ = load_data()
+    
+    if book_id not in books['BookID'].values:
+        return False, "Book not found."
+        
+    book = books[books['BookID'] == book_id].iloc[0]
+    if book['Status'] == 'Issued':
+        return False, "Cannot delete. Book is currently Issued."
+        
+    # Delete
+    books = books[books['BookID'] != book_id]
+    save_books(books)
+    return True, "Book deleted successfully."
+
+def delete_member(member_id):
+    """
+    Deletes a member if they have NO active loans.
+    """
+    _, members, _ = load_data()
+    
+    if member_id not in members['MemberID'].values:
+        return False, "Member not found."
+        
+    active_loans = get_member_current_loans(member_id)
+    if active_loans:
+        return False, f"Cannot delete. Member has {len(active_loans)} active loans."
+        
+    # Delete
+    members = members[members['MemberID'] != member_id]
+    members.to_csv(MEMBERS_FILE, index=False)
+    return True, "Member deleted successfully."

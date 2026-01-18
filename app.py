@@ -103,13 +103,58 @@ def books_page():
     status_filter = request.args.get('status')
     if status_filter:
         books = books[books['Status'] == status_filter]
+    
+    # Pagination
+    page = request.args.get('page', 1, type=int)
+    per_page = 20
+    total = len(books)
+    start = (page - 1) * per_page
+    end = start + per_page
+    
+    paginated_books = books.iloc[start:end].to_dict('records')
+    
+    has_next = end < total
+    has_prev = page > 1
         
-    return render_template('books.html', books=books.to_dict('records'), filter=status_filter)
+    return render_template('books.html', books=paginated_books, filter=status_filter, page=page, has_next=has_next, has_prev=has_prev)
 
 @app.route('/members')
 def members_page():
     _, members, _ = load_data()
-    return render_template('members.html', members=members.to_dict('records'))
+    
+    # Pagination
+    page = request.args.get('page', 1, type=int)
+    per_page = 20
+    total = len(members)
+    start = (page - 1) * per_page
+    end = start + per_page
+    
+    paginated_members = members.iloc[start:end].to_dict('records')
+    
+    has_next = end < total
+    has_prev = page > 1
+    
+    return render_template('members.html', members=paginated_members, page=page, has_next=has_next, has_prev=has_prev)
+
+@app.route('/delete/book/<book_id>')
+def delete_book_route(book_id):
+    from utils.data_manager import delete_book
+    success, msg = delete_book(book_id)
+    if success:
+        flash(msg, 'success')
+    else:
+        flash(msg, 'danger')
+    return redirect(url_for('books_page'))
+
+@app.route('/delete/member/<member_id>')
+def delete_member_route(member_id):
+    from utils.data_manager import delete_member
+    success, msg = delete_member(member_id)
+    if success:
+        flash(msg, 'success')
+    else:
+        flash(msg, 'danger')
+    return redirect(url_for('members_page'))
 
 @app.route('/member/<member_id>')
 def member_details(member_id):
