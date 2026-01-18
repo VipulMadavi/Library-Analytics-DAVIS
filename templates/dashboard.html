@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h2 class="mb-3">Analytics Dashboard</h2>
+    </div>
+</div>
+
+<!-- KPIs -->
+<div class="row">
+    <div class="col-md-3">
+        <a href="/books" class="text-decoration-none">
+            <div class="kpi-card bg-primary text-white">
+                <h3>{{ kpis.total_books }}</h3>
+                <p>Total Books</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="/books?status=Available" class="text-decoration-none">
+            <div class="kpi-card bg-success text-white">
+                <h3>{{ kpis.available_books }}</h3>
+                <p>Available</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="/books?status=Issued" class="text-decoration-none">
+            <div class="kpi-card bg-warning text-dark">
+                <h3>{{ kpis.issued_books }}</h3>
+                <p>Issued</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="/members" class="text-decoration-none">
+            <div class="kpi-card bg-info text-white">
+                <h3>{{ kpis.total_members }}</h3>
+                <p>Members</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<hr class="my-5">
+
+<!-- Charts -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Inventory Distribution</div>
+            <div class="card-body text-center">
+                <img src="{{ charts.category_bar }}" class="chart-img" alt="Books by Category">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Activity Timeline</div>
+            <div class="card-body text-center">
+                {% if charts.transaction_line %}
+                <img src="{{ charts.transaction_line }}" class="chart-img" alt="Transactions Timeline">
+                {% else %}
+                <p class="text-muted mt-5">No transactions yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- History -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">Recent Transactions</div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Book</th>
+                            <th>Member</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in history %}
+                        <tr>
+                            <td>{{ t.Title }} <small class="text-muted">({{ t.BookID }})</small></td>
+                            <td>{{ t.Name }}</td>
+                            <td>{{ t.Date }}</td>
+                            <td>
+                                {% if t.Action == 'Issue' %}
+                                <span class="badge bg-warning text-dark">Issue</span>
+                                {% else %}
+                                <span class="badge bg-success">Return</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="alert alert-secondary">
+            <strong>💡 Insight:</strong>
+            {% if kpis.issued_books == 0 %}
+            No books are currently issued. Use the <a href="/issue">Issue Book</a> page to start tracking activity.
+            {% else %}
+            {{ (kpis.issued_books / kpis.total_books * 100)|round(1) }}% of the library collection is currently out on
+            loan.
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

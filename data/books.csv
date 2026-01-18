@@ -1,6 +1,18 @@
 BookID,Title,Author,Category,Year,Status
-B001,The Great Gatsby,F. Scott Fitzgerald,Fiction,1925,Available
-B002,1984,George Orwell,Dystopian,1949,Available
-B003,Python Crash Course,Eric Matthes,Education,2019,Available
-B004,Clean Code,Robert C. Martin,Technology,2008,Available
-B005,Sapiens,Yuval Noah Harari,History,2011,Available
+B001,Introduction to Algorithms,Thomas H. Cormen,Technology,2009,Issued
+B002,Operating System Concepts,Abraham Silberschatz,Technology,2018,Available
+B003,Computer Networks,Andrew S. Tanenbaum,Technology,2011,Issued
+B004,Database System Concepts,Henry F. Korth,Technology,2019,Available
+B005,Artificial Intelligence: A Modern Approach,Stuart Russell,Technology,2020,Issued
+B006,Discrete Mathematics and Its Applications,Kenneth Rosen,Education,2012,Available
+B007,Digital Logic Design,M. Morris Mano,Education,2008,Issued
+B008,Engineering Mathematics,K.A. Stroud,Education,2016,Available
+B009,Clean Code,Robert C. Martin,Technology,2008,Issued
+B010,Python Programming,Reema Thareja,Technology,2017,Available
+B011,Data Science from Scratch,Joel Grus,Technology,2015,Issued
+B012,Gate Previous Years Questions,Made Easy,Exam Prep,2021,Available
+B013,Machine Learning,Tom M. Mitchell,Technology,1997,Available
+B014,Software Engineering,Ian Sommerville,Education,2015,Issued
+B015,Compiler Design,Alfred V. Aho,Education,2006,Available
+B016,Cloud Computing,Rajkumar Buyya,Technology,2013,Issued
+B017,Cyber Security Essentials,Charles J. Brooks,Technology,2018,Available

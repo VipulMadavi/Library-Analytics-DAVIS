@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">Simulate Book Issue</h4>
+            </div>
+            <div class="card-body">
+                <form action="/issue" method="POST" id="issueForm">
+                    <div class="mb-3">
+                        <label for="book_id" class="form-label">Book ID</label>
+                        <input type="text" class="form-control" id="book_id" name="book_id" placeholder="e.g. B001"
+                            required autocomplete="off">
+                        <div id="book-preview" class="mt-2 text-muted small"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="member_id" class="form-label">Member ID</label>
+                        <input type="text" class="form-control" id="member_id" name="member_id" placeholder="e.g. M001"
+                            required autocomplete="off">
+                        <div id="member-preview" class="mt-2 text-muted small"></div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary" id="submitBtn">Issue Book</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h5>Available Book IDs (Quick Ref):</h5>
+            <ul>
+                {% for id in available_ids %}
+                <li>{{ id }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    const bookInput = document.getElementById('book_id');
+    const memberInput = document.getElementById('member_id');
+    const bookPreview = document.getElementById('book-preview');
+    const memberPreview = document.getElementById('member-preview');
+    const form = document.getElementById('issueForm');
+
+    let bookValid = false;
+    let memberValid = false;
+
+    async function checkBook() {
+        const id = bookInput.value.trim();
+        if (!id) return;
+
+        const res = await fetch(`/api/book/${id}`);
+        if (res.ok) {
+            const data = await res.json();
+            if (data.Status === 'Available') {
+                bookPreview.innerHTML = `<div class="text-success">✅ ${data.Title} (${data.Author})</div>`;
+                bookValid = true;
+            } else {
+                bookPreview.innerHTML = `<div class="text-danger">⚠️ ${data.Title} is currently <strong>${data.Status}</strong></div>`;
+                bookValid = false;
+            }
+        } else {
+            bookPreview.innerHTML = `<div class="text-danger">❌ ID Not Found</div>`;
+            bookValid = false;
+        }
+    }
+
+    async function checkMember() {
+        const id = memberInput.value.trim();
+        if (!id) return;
+
+        const res = await fetch(`/api/member/${id}`);
+        if (res.ok) {
+            const data = await res.json();
+            memberPreview.innerHTML = `<div class="text-success">✅ ${data.Name} (${data.Occupation})</div>`;
+            memberValid = true;
+        } else {
+            memberPreview.innerHTML = `<div class="text-danger">❌ ID Not Found</div>`;
+            memberValid = false;
+        }
+    }
+
+    bookInput.addEventListener('blur', checkBook);
+    memberInput.addEventListener('blur', checkMember);
+
+    form.addEventListener('submit', (e) => {
+        // Simple client-side confirm
+        if (!confirm("Are you sure you want to issue this book?")) {
+            e.preventDefault();
+        }
+    });
+</script>
+{% endblock %}

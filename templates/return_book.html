@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">Return Book</h4>
+            </div>
+            <div class="card-body">
+                <form action="/return" method="POST" id="returnForm">
+                    <div class="mb-3">
+                        <label for="book_id" class="form-label">Book ID</label>
+                        <input type="text" class="form-control" id="book_id" name="book_id" placeholder="e.g. B001"
+                            required autocomplete="off">
+                        <div id="book-preview" class="mt-2 text-muted small"></div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger" id="submitBtn" disabled>Return Book</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const bookInput = document.getElementById('book_id');
+    const preview = document.getElementById('book-preview');
+    const submitBtn = document.getElementById('submitBtn');
+
+    bookInput.addEventListener('blur', async () => {
+        const id = bookInput.value.trim();
+        if (!id) return;
+
+        try {
+            const res = await fetch(`/api/book/${id}`);
+            if (res.ok) {
+                const data = await res.json();
+                if (data.Status === 'Issued') {
+                    preview.innerHTML = `<div class="alert alert-success">📚 <strong>${data.Title}</strong> by ${data.Author}</div>`;
+                    submitBtn.disabled = false;
+                } else if (data.Status === 'Available') {
+                    preview.innerHTML = `<div class="alert alert-warning">⚠️ Book is already marked as <strong>Available</strong>.</div>`;
+                    submitBtn.disabled = true;
+                }
+            } else {
+                preview.innerHTML = `<div class="alert alert-danger">❌ Book ID not found.</div>`;
+                submitBtn.disabled = true;
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    });
+</script>
+{% endblock %}

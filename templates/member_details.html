@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/members">Members</a></li>
+                <li class="breadcrumb-item active">{{ member.Name }}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <!-- Profile Card -->
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <div class="bg-light rounded-circle d-inline-flex justify-content-center align-items-center mb-3"
+                    style="width: 80px; height: 80px; font-size: 2rem;">
+                    👤
+                </div>
+                <h4>{{ member.Name }}</h4>
+                <p class="text-muted mb-1">{{ member.Occupation }}</p>
+                <p class="text-muted small">{{ member.City }}</p>
+                <hr>
+                <div class="text-start">
+                    <p><strong>Member ID:</strong> <code>{{ member.MemberID }}</code></p>
+                    <p><strong>Age:</strong> {{ member.Age }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <!-- History -->
+        <div class="card">
+            <div class="card-header bg-dark text-white">Full Reading History</div>
+            <div class="card-body">
+                {% if history %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Book</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in history %}
+                        <tr>
+                            <td>{{ item.Date }}</td>
+                            <td>
+                                <div>{{ item.Title }}</div>
+                                <small class="text-muted">{{ item.Author }}</small>
+                            </td>
+                            <td>
+                                {% if item.Action == 'Issue' %}
+                                <span class="badge bg-warning text-dark">Issued</span>
+                                {% else %}
+                                <span class="badge bg-success">Returned</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="text-muted text-center py-4">No history records found for this member.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>
+            Inventory
+            {% if filter %}
+            <span class="badge bg-secondary fs-6 align-middle">{{ filter }}</span>
+            <a href="/books" class="btn btn-sm btn-outline-secondary ms-2">Clear Filter</a>
+            {% endif %}
+        </h2>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="/issue" class="btn btn-primary">+ Issue Book</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td><code>{{ book.BookID }}</code></td>
+                    <td>{{ book.Title }}</td>
+                    <td>{{ book.Author }}</td>
+                    <td><span class="badge bg-light text-dark border">{{ book.Category }}</span></td>
+                    <td>
+                        {% if book.Status == 'Issued' %}
+                        <span class="badge bg-warning text-dark">Issued</span>
+                        {% else %}
+                        <span class="badge bg-success">Available</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

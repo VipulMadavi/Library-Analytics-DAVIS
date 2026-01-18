@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h2>Members Directory</h2>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Occupation</th>
+                    <th>City</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in members %}
+                <tr style="cursor: pointer;" onclick="window.location='/member/{{ m.MemberID }}'">
+                    <td><code>{{ m.MemberID }}</code></td>
+                    <td><strong>{{ m.Name }}</strong></td>
+                    <td>{{ m.Occupation }}</td>
+                    <td>{{ m.City }}</td>
+                    <td><a href="/member/{{ m.MemberID }}" class="btn btn-sm btn-outline-primary">View History</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,19 @@
 MemberID,Name,Age,Occupation,City
-M001,John Doe,28,Engineer,New York
-M002,Jane Smith,34,Designer,London
-M003,Alice Brown,22,Student,Paris
-M004,Bob White,45,Teacher,Berlin
-M005,Charlie Black,30,Artist,Tokyo
+M001,Aarav Sharma,19,B.Tech Student,Pune
+M002,Neha Patil,20,B.Tech Student,Mumbai
+M003,Rohan Verma,21,B.Tech Student,Nagpur
+M004,Priya Kulkarni,22,B.Tech Student,Nashik
+M005,Aditya Joshi,23,M.Tech Student,Pune
+M006,Ananya Deshpande,24,M.Tech Student,Aurangabad
+M007,Siddharth Mehta,28,Research Scholar,Mumbai
+M008,Kunal Singh,35,Assistant Professor,Pune
+M009,Shweta Nair,32,Librarian,Pune
+M010,Akash Rao,20,B.Tech Student,Kolhapur
+M011,Sneha Iyer,21,B.Tech Student,Chennai
+M012,Vivek Mishra,22,B.Tech Student,Bhopal
+M013,Ritika Malhotra,19,B.Tech Student,Delhi
+M014,Manish Kumar,21,B.Tech Student,Patna
+M015,Pooja Chavan,22,B.Tech Student,Satara
+M016,Nikhil Kulkarni,24,M.Tech Student,Pune
+M017,Arjun Reddy,20,B.Tech Student,Hyderabad
+M018,Kavita Sharma,27,Research Scholar,Jaipur
