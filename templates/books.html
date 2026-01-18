@@ -12,18 +12,24 @@
 
 <div class="card p-3 mb-4">
     <div class="row g-3">
-        <div class="col-md-8">
-            <input type="text" id="searchInput" class="form-control" placeholder="🔍 Search by Title, Author, or ID...">
+        <div class="col-md-5">
+            <input type="text" id="searchInput" class="form-control" placeholder="🔍 Search Title, Author, ID...">
+        </div>
+        <div class="col-md-3">
+            <select id="departmentFilter" class="form-select">
+                <option value="">All Departments</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Mechanical">Mechanical</option>
+                <option value="Civil">Civil</option>
+                <option value="Electronics">Electronics</option>
+                <option value="MBA">MBA</option>
+            </select>
         </div>
         <div class="col-md-4">
-            <select id="categoryFilter" class="form-select">
-                <option value="">All Categories</option>
-                <!-- Dynamically populated via JS roughly or static common ones -->
-                <option value="Fiction">Fiction</option>
-                <option value="Technology">Technology</option>
-                <option value="Education">Education</option>
-                <option value="History">History</option>
-                <option value="Dystopian">Dystopian</option>
+            <select id="statusFilter" class="form-select">
+                <option value="">All Statuses</option>
+                <option value="Available">🟢 Available</option>
+                <option value="Issued">🔴 Issued</option>
             </select>
         </div>
     </div>
@@ -37,17 +43,17 @@
                     <th>ID</th>
                     <th>Title</th>
                     <th>Author</th>
-                    <th>Category</th>
+                    <th>Department</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 {% for book in books %}
-                <tr class="book-row" data-category="{{ book.Category }}">
+                <tr class="book-row" data-dept="{{ book.Department }}" data-status="{{ book.Status }}">
                     <td><code>{{ book.BookID }}</code></td>
                     <td class="book-title">{{ book.Title }}</td>
                     <td class="book-author">{{ book.Author }}</td>
-                    <td><span class="badge bg-light text-dark border">{{ book.Category }}</span></td>
+                    <td><span class="badge bg-light text-dark border">{{ book.Department }}</span></td>
                     <td>
                         {% if book.Status == 'Issued' %}
                         <span class="badge bg-warning text-dark">Issued</span>
@@ -64,23 +70,27 @@
 
 <script>
     const searchInput = document.getElementById('searchInput');
-    const categoryFilter = document.getElementById('categoryFilter');
+    const departmentFilter = document.getElementById('departmentFilter');
+    const statusFilter = document.getElementById('statusFilter');
     const rows = document.querySelectorAll('.book-row');
 
     function filterBooks() {
         const term = searchInput.value.toLowerCase();
-        const category = categoryFilter.value;
+        const dept = departmentFilter.value;
+        const status = statusFilter.value;
 
         rows.forEach(row => {
             const title = row.querySelector('.book-title').textContent.toLowerCase();
             const author = row.querySelector('.book-author').textContent.toLowerCase();
             const id = row.cells[0].textContent.toLowerCase();
-            const rowCat = row.dataset.category;
+            const rowDept = row.dataset.dept;
+            const rowStatus = row.dataset.status;
 
             const matchesSearch = title.includes(term) || author.includes(term) || id.includes(term);
-            const matchesCategory = category === "" || rowCat === category;
+            const matchesDept = dept === "" || rowDept === dept;
+            const matchesStatus = status === "" || rowStatus === status;
 
-            if (matchesSearch && matchesCategory) {
+            if (matchesSearch && matchesDept && matchesStatus) {
                 row.style.display = '';
             } else {
                 row.style.display = 'none';
@@ -89,6 +99,7 @@
     }
 
     searchInput.addEventListener('input', filterBooks);
-    categoryFilter.addEventListener('change', filterBooks);
+    departmentFilter.addEventListener('change', filterBooks);
+    statusFilter.addEventListener('change', filterBooks);
 </script>
 {% endblock %}

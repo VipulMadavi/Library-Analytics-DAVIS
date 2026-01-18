@@ -22,6 +22,45 @@ def save_transactions(transactions_df):
     """Saves transactions DF back to CSV"""
     transactions_df.to_csv(TRANSACTIONS_FILE, index=False)
 
+def add_new_book(data):
+    """Adds a new book if ID is unique."""
+    books, _, _ = load_data()
+    if data['BookID'] in books['BookID'].values:
+        return False, "Book ID already exists."
+    
+    # Ensure correct columns
+    new_book = pd.DataFrame([{
+        'BookID': data['BookID'],
+        'Title': data['Title'],
+        'Author': data['Author'],
+        'Department': data['Department'],
+        'Status': 'Available'
+    }])
+    
+    books = pd.concat([books, new_book], ignore_index=True)
+    save_books(books)
+    return True, "Book added successfully."
+
+def add_new_member(data):
+    """Adds a new member if ID is unique."""
+    _, members, _ = load_data()
+    if data['MemberID'] in members['MemberID'].values:
+        return False, "Member ID already exists."
+        
+    new_member = pd.DataFrame([{
+        'MemberID': data['MemberID'],
+        'Name': data['Name'],
+        'Role': data['Role'],
+        'Department': data['Department'],
+        'Batch': data['Batch']
+    }])
+    
+    # Save back to CSV directly to handle differing columns gracefully if needed
+    # but here we follow the strict schema
+    members = pd.concat([members, new_member], ignore_index=True)
+    members.to_csv(MEMBERS_FILE, index=False)
+    return True, "Member registered successfully."
+
 def issue_book(book_id, member_id):
     """
     Issues a book to a member.

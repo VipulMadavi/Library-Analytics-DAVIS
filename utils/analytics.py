@@ -29,12 +29,12 @@ def get_plot_url(plot_func, *args):
     plt.close() # Close figure to free memory
     return 'data:image/png;base64,{}'.format(plot_url)
 
-def plot_books_by_category(books):
-    counts = books['Category'].value_counts()
+def plot_books_by_department(books):
+    counts = books['Department'].value_counts()
     plt.figure(figsize=(6, 4))
-    counts.plot(kind='bar', color='skyblue')
-    plt.title('Books by Category')
-    plt.xlabel('Category')
+    counts.plot(kind='bar', color='#6366f1') # Brand color
+    plt.title('Library Collection by Department')
+    plt.xlabel('Department')
     plt.ylabel('Count')
     plt.xticks(rotation=45)
     plt.tight_layout()
@@ -56,8 +56,8 @@ def generate_charts(books, transactions):
     """Generates all charts and returns a dict of base64 strings"""
     charts = {}
     
-    # 1. Books by Category
-    charts['category_bar'] = get_plot_url(plot_books_by_category, books)
+    # 1. Books by Department
+    charts['category_bar'] = get_plot_url(plot_books_by_department, books)
     
     # 2. Transaction Timeline (only if check if not empty to avoid errors)
     if not transactions.empty:

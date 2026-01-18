@@ -1,18 +1,51 @@
-BookID,Title,Author,Category,Year,Status
-B001,Introduction to Algorithms,Thomas H. Cormen,Technology,2009,Issued
-B002,Operating System Concepts,Abraham Silberschatz,Technology,2018,Available
-B003,Computer Networks,Andrew S. Tanenbaum,Technology,2011,Issued
-B004,Database System Concepts,Henry F. Korth,Technology,2019,Available
-B005,Artificial Intelligence: A Modern Approach,Stuart Russell,Technology,2020,Issued
-B006,Discrete Mathematics and Its Applications,Kenneth Rosen,Education,2012,Available
-B007,Digital Logic Design,M. Morris Mano,Education,2008,Issued
-B008,Engineering Mathematics,K.A. Stroud,Education,2016,Available
-B009,Clean Code,Robert C. Martin,Technology,2008,Issued
-B010,Python Programming,Reema Thareja,Technology,2017,Available
-B011,Data Science from Scratch,Joel Grus,Technology,2015,Issued
-B012,Gate Previous Years Questions,Made Easy,Exam Prep,2021,Available
-B013,Machine Learning,Tom M. Mitchell,Technology,1997,Available
-B014,Software Engineering,Ian Sommerville,Education,2015,Issued
-B015,Compiler Design,Alfred V. Aho,Education,2006,Available
-B016,Cloud Computing,Rajkumar Buyya,Technology,2013,Issued
-B017,Cyber Security Essentials,Charles J. Brooks,Technology,2018,Available
+BookID,Title,Author,Department,Status
+LIB1001,Introduction to Algorithms,Cormen,Computer Science,Available
+LIB1002,The Pragmatic Programmer,Andy Hunt,Computer Science,Available
+LIB1003,Artificial Intelligence,Russell & Norvig,Computer Science,Available
+LIB1004,Fluid Mechanics,R.K. Bansal,Mechanical,Available
+LIB1005,Surveying Vol. 1,B.C. Punmia,Civil,Issued
+LIB1006,Artificial Intelligence,Russell & Norvig,Computer Science,Available
+LIB1007,Engineering Thermodynamics,P.K. Nag,Mechanical,Issued
+LIB1008,Financial Management,Prasanna Chandra,MBA,Available
+LIB1009,Microelectronic Circuits,Sedra & Smith,Electronics,Available
+LIB1010,Structural Analysis,Hibbeler,Civil,Issued
+LIB1011,Database System Concepts,Silberschatz,Computer Science,Available
+LIB1012,Financial Management,Prasanna Chandra,MBA,Issued
+LIB1013,Principles of Marketing,Philip Kotler,MBA,Available
+LIB1014,Structural Analysis,Hibbeler,Civil,Available
+LIB1015,Structural Analysis,Hibbeler,Civil,Available
+LIB1016,The Pragmatic Programmer,Andy Hunt,Computer Science,Available
+LIB1017,Artificial Intelligence,Russell & Norvig,Computer Science,Available
+LIB1018,Clean Code,Robert C. Martin,Computer Science,Available
+LIB1019,Database System Concepts,Silberschatz,Computer Science,Issued
+LIB1020,Surveying Vol. 1,B.C. Punmia,Civil,Available
+LIB1021,Introduction to Algorithms,Cormen,Computer Science,Available
+LIB1022,Clean Code,Robert C. Martin,Computer Science,Available
+LIB1023,Digital Logic Design,Morris Mano,Electronics,Available
+LIB1024,Engineering Thermodynamics,P.K. Nag,Mechanical,Available
+LIB1025,Database System Concepts,Silberschatz,Computer Science,Available
+LIB1026,Digital Logic Design,Morris Mano,Electronics,Available
+LIB1027,Digital Logic Design,Morris Mano,Electronics,Issued
+LIB1028,Introduction to Algorithms,Cormen,Computer Science,Available
+LIB1029,Surveying Vol. 1,B.C. Punmia,Civil,Available
+LIB1030,Engineering Thermodynamics,P.K. Nag,Mechanical,Available
+LIB1031,Surveying Vol. 1,B.C. Punmia,Civil,Available
+LIB1032,Database System Concepts,Silberschatz,Computer Science,Available
+LIB1033,Theory of Machines,S.S. Rattan,Mechanical,Issued
+LIB1034,Surveying Vol. 1,B.C. Punmia,Civil,Available
+LIB1035,Structural Analysis,Hibbeler,Civil,Available
+LIB1036,Engineering Thermodynamics,P.K. Nag,Mechanical,Issued
+LIB1037,Microelectronic Circuits,Sedra & Smith,Electronics,Available
+LIB1038,Engineering Thermodynamics,P.K. Nag,Mechanical,Available
+LIB1039,Microelectronic Circuits,Sedra & Smith,Electronics,Available
+LIB1040,Theory of Machines,S.S. Rattan,Mechanical,Available
+LIB1041,Clean Code,Robert C. Martin,Computer Science,Available
+LIB1042,Clean Code,Robert C. Martin,Computer Science,Available
+LIB1043,Artificial Intelligence,Russell & Norvig,Computer Science,Available
+LIB1044,Database System Concepts,Silberschatz,Computer Science,Available
+LIB1045,The Pragmatic Programmer,Andy Hunt,Computer Science,Available
+LIB1046,The Pragmatic Programmer,Andy Hunt,Computer Science,Available
+LIB1047,Principles of Marketing,Philip Kotler,MBA,Available
+LIB1048,Digital Logic Design,Morris Mano,Electronics,Available
+LIB1049,Introduction to Algorithms,Cormen,Computer Science,Available
+LIB1050,Structural Analysis,Hibbeler,Civil,Available

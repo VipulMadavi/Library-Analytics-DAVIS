@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">Register New Student/Faculty</div>
+            <div class="card-body">
+                <form action="/add_member" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Member/Roll ID</label>
+                        <input type="text" name="member_id" class="form-control" placeholder="e.g. STU2024001" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <select name="role" class="form-select" required>
+                            <option value="Student">Student</option>
+                            <option value="Faculty">Faculty</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Department</label>
+                        <select name="department" class="form-select" required>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Mechanical">Mechanical</option>
+                            <option value="Civil">Civil</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="MBA">MBA</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Batch / Designation</label>
+                        <input type="text" name="batch" class="form-control" placeholder="e.g. 2023-2027" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Register Member</button>
+                    <a href="/members" class="btn btn-outline-secondary w-100 mt-2">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

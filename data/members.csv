@@ -1,19 +1,19 @@
-MemberID,Name,Age,Occupation,City
-M001,Aarav Sharma,19,B.Tech Student,Pune
-M002,Neha Patil,20,B.Tech Student,Mumbai
-M003,Rohan Verma,21,B.Tech Student,Nagpur
-M004,Priya Kulkarni,22,B.Tech Student,Nashik
-M005,Aditya Joshi,23,M.Tech Student,Pune
-M006,Ananya Deshpande,24,M.Tech Student,Aurangabad
-M007,Siddharth Mehta,28,Research Scholar,Mumbai
-M008,Kunal Singh,35,Assistant Professor,Pune
-M009,Shweta Nair,32,Librarian,Pune
-M010,Akash Rao,20,B.Tech Student,Kolhapur
-M011,Sneha Iyer,21,B.Tech Student,Chennai
-M012,Vivek Mishra,22,B.Tech Student,Bhopal
-M013,Ritika Malhotra,19,B.Tech Student,Delhi
-M014,Manish Kumar,21,B.Tech Student,Patna
-M015,Pooja Chavan,22,B.Tech Student,Satara
-M016,Nikhil Kulkarni,24,M.Tech Student,Pune
-M017,Arjun Reddy,20,B.Tech Student,Hyderabad
-M018,Kavita Sharma,27,Research Scholar,Jaipur
+MemberID,Name,Role,Department,Batch
+STU2023000,Aarav Sharma,Student,MBA,2023-2027
+STU2023001,Vivaan Patel,Student,Civil,2023-2027
+STU2023002,Aditya Vernekar,Student,MBA,2023-2027
+STU2023003,Vihaan Rao,Student,MBA,2023-2027
+STU2023004,Arjun Mehta,Student,MBA,2023-2027
+STU2023005,Sai Iyer,Student,MBA,2023-2027
+STU2023006,Reyansh Reddy,Student,Computer Science,2023-2027
+STU2023007,Ayaan Kumar,Student,Civil,2023-2027
+STU2023008,Krishna Das,Student,MBA,2023-2027
+STU2023009,Ishaan Nair,Student,Civil,2023-2027
+STU2023010,Diya Malhotra,Student,Civil,2023-2027
+STU2023011,Saanvi Shetty,Student,Electronics,2023-2027
+STU2023012,Ananya Joshi,Student,Computer Science,2023-2027
+STU2023013,Kiara Singh,Student,Civil,2023-2027
+STU2023014,Pari Kapoor,Student,Mechanical,2023-2027
+FAC100,Dr. R.K. Mishra,Faculty,MBA,Senior Professor
+FAC101,Prof. S. Deshpande,Faculty,Electronics,Senior Professor
+FAC102,Dr. A.P.J. Abdul,Faculty,Mechanical,Senior Professor

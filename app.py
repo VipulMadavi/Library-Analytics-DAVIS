@@ -55,6 +55,45 @@ def return_page():
             
     return render_template('return_book.html')
 
+@app.route('/add_book', methods=['GET', 'POST'])
+def add_book_page():
+    if request.method == 'POST':
+        data = {
+            'BookID': request.form.get('book_id'),
+            'Title': request.form.get('title'),
+            'Author': request.form.get('author'),
+            'Department': request.form.get('department')
+        }
+        from utils.data_manager import add_new_book
+        success, msg = add_new_book(data)
+        if success:
+            flash(msg, 'success')
+            return redirect(url_for('books_page'))
+        else:
+            flash(msg, 'danger')
+            
+    return render_template('add_book.html')
+
+@app.route('/add_member', methods=['GET', 'POST'])
+def add_member_page():
+    if request.method == 'POST':
+        data = {
+            'MemberID': request.form.get('member_id'),
+            'Name': request.form.get('name'),
+            'Role': request.form.get('role'),
+            'Department': request.form.get('department'),
+            'Batch': request.form.get('batch')
+        }
+        from utils.data_manager import add_new_member
+        success, msg = add_new_member(data)
+        if success:
+            flash(msg, 'success')
+            return redirect(url_for('members_page'))
+        else:
+            flash(msg, 'danger')
+            
+    return render_template('add_member.html')
+
 @app.route('/books')
 def books_page():
     books, _, _ = load_data()
