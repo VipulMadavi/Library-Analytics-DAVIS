@@ -128,4 +128,59 @@ def get_member_history(member_id):
     # Sort by Date descending
     merged = merged.sort_values(by='Date', ascending=False)
     
-    return merged.to_dict('records')
+    # Calculate Overdue Status (Simple Logic: Issue > 14 days ago)
+    records = merged.to_dict('records')
+    today = datetime.now().date()
+    
+    for record in records:
+        if record['Action'] == 'Issue':
+            tx_date = datetime.strptime(record['Date'], '%Y-%m-%d').date()
+            delta = (today - tx_date).days
+            record['DaysAgo'] = delta
+            record['Overdue'] = delta > 14
+        else:
+            record['Overdue'] = False
+            
+    return records
+
+def get_member_current_loans(member_id):
+    """
+    Replays transaction history to find currently holding books.
+    Returns list of dicts with Overdue status.
+    """
+    _, _, transactions = load_data()
+    # Filter for member
+    txs = transactions[transactions['MemberID'] == member_id].sort_values(by='Date')
+    
+    loans = {} # BookID -> {Date, TransactionID}
+    
+    for _, row in txs.iterrows():
+        bid = row['BookID']
+        if row['Action'] == 'Issue':
+            loans[bid] = row
+        elif row['Action'] == 'Return':
+            if bid in loans:
+                del loans[bid]
+                
+    # Now loans contains only active books
+    active_loans = []
+    from utils.data_manager import load_data # inner import to avoid circular if any (safe here)
+    books, _, _ = load_data()
+    today = datetime.now().date()
+    
+    for bid, row in loans.items():
+        # Get Book details
+        book_info = books[books['BookID'] == bid].iloc[0]
+        issue_date = datetime.strptime(row['Date'], '%Y-%m-%d').date()
+        delta = (today - issue_date).days
+        
+        active_loans.append({
+            'BookID': bid,
+            'Title': book_info['Title'],
+            'Author': book_info['Author'],
+            'Date': row['Date'],
+            'DaysHeld': delta,
+            'Overdue': delta > 14
+        })
+        
+    return active_loans

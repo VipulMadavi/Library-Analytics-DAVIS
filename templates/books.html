@@ -1,24 +1,37 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="row mb-4">
-    <div class="col-md-8">
-        <h2>
-            Inventory
-            {% if filter %}
-            <span class="badge bg-secondary fs-6 align-middle">{{ filter }}</span>
-            <a href="/books" class="btn btn-sm btn-outline-secondary ms-2">Clear Filter</a>
-            {% endif %}
-        </h2>
+<div class="row mb-4 align-items-center">
+    <div class="col-md-6">
+        <h2>Inventory</h2>
     </div>
-    <div class="col-md-4 text-end">
+    <div class="col-md-6 text-end">
         <a href="/issue" class="btn btn-primary">+ Issue Book</a>
+    </div>
+</div>
+
+<div class="card p-3 mb-4">
+    <div class="row g-3">
+        <div class="col-md-8">
+            <input type="text" id="searchInput" class="form-control" placeholder="🔍 Search by Title, Author, or ID...">
+        </div>
+        <div class="col-md-4">
+            <select id="categoryFilter" class="form-select">
+                <option value="">All Categories</option>
+                <!-- Dynamically populated via JS roughly or static common ones -->
+                <option value="Fiction">Fiction</option>
+                <option value="Technology">Technology</option>
+                <option value="Education">Education</option>
+                <option value="History">History</option>
+                <option value="Dystopian">Dystopian</option>
+            </select>
+        </div>
     </div>
 </div>
 
 <div class="card">
     <div class="card-body">
-        <table class="table table-hover">
+        <table class="table table-hover" id="booksTable">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -30,10 +43,10 @@
             </thead>
             <tbody>
                 {% for book in books %}
-                <tr>
+                <tr class="book-row" data-category="{{ book.Category }}">
                     <td><code>{{ book.BookID }}</code></td>
-                    <td>{{ book.Title }}</td>
-                    <td>{{ book.Author }}</td>
+                    <td class="book-title">{{ book.Title }}</td>
+                    <td class="book-author">{{ book.Author }}</td>
                     <td><span class="badge bg-light text-dark border">{{ book.Category }}</span></td>
                     <td>
                         {% if book.Status == 'Issued' %}
@@ -48,4 +61,34 @@
         </table>
     </div>
 </div>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const rows = document.querySelectorAll('.book-row');
+
+    function filterBooks() {
+        const term = searchInput.value.toLowerCase();
+        const category = categoryFilter.value;
+
+        rows.forEach(row => {
+            const title = row.querySelector('.book-title').textContent.toLowerCase();
+            const author = row.querySelector('.book-author').textContent.toLowerCase();
+            const id = row.cells[0].textContent.toLowerCase();
+            const rowCat = row.dataset.category;
+
+            const matchesSearch = title.includes(term) || author.includes(term) || id.includes(term);
+            const matchesCategory = category === "" || rowCat === category;
+
+            if (matchesSearch && matchesCategory) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    searchInput.addEventListener('input', filterBooks);
+    categoryFilter.addEventListener('change', filterBooks);
+</script>
 {% endblock %}

@@ -34,9 +34,47 @@
     </div>
 
     <div class="col-md-8">
+        <!-- Active Loans -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">Active Loans</div>
+            <div class="card-body">
+                {% if current_loans %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Book</th>
+                            <th>Issued On</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in current_loans %}
+                        <tr class="{% if item.Overdue %}table-danger{% endif %}">
+                            <td>
+                                <div>{{ item.Title }}</div>
+                                <small class="text-muted">{{ item.Author }}</small>
+                            </td>
+                            <td>{{ item.Date }}</td>
+                            <td>
+                                {% if item.Overdue %}
+                                <span class="badge bg-danger">Overdue ({{ item.DaysHeld }} days)</span>
+                                {% else %}
+                                <span class="badge bg-info text-dark">On Time</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="text-muted text-center py-2">No active loans.</p>
+                {% endif %}
+            </div>
+        </div>
+
         <!-- History -->
         <div class="card">
-            <div class="card-header bg-dark text-white">Full Reading History</div>
+            <div class="card-header bg-secondary text-white">Full History</div>
             <div class="card-body">
                 {% if history %}
                 <table class="table">
@@ -49,8 +87,13 @@
                     </thead>
                     <tbody>
                         {% for item in history %}
-                        <tr>
-                            <td>{{ item.Date }}</td>
+                        <tr class="{% if item.Overdue %}table-danger{% endif %}">
+                            <td>
+                                {{ item.Date }}
+                                {% if item.Overdue %}
+                                <div class="badge bg-danger mt-1">Overdue ({{ item.DaysAgo }} days)</div>
+                                {% endif %}
+                            </td>
                             <td>
                                 <div>{{ item.Title }}</div>
                                 <small class="text-muted">{{ item.Author }}</small>

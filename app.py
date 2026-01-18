@@ -80,10 +80,11 @@ def member_details(member_id):
         flash('Member not found', 'danger')
         return redirect(url_for('members_page'))
         
-    from utils.data_manager import get_member_history
+    from utils.data_manager import get_member_history, get_member_current_loans
     history = get_member_history(member_id)
+    current_loans = get_member_current_loans(member_id)
     
-    return render_template('member_details.html', member=member.iloc[0].to_dict(), history=history)
+    return render_template('member_details.html', member=member.iloc[0].to_dict(), history=history, current_loans=current_loans)
 
 # --- API Endpoints ---
 @app.route('/api/book/<book_id>')

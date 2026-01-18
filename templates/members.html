@@ -7,6 +7,10 @@
     </div>
 </div>
 
+<div class="card p-3 mb-4">
+    <input type="text" id="memberSearch" class="form-control" placeholder="🔍 Search Member Name or ID...">
+</div>
+
 <div class="card">
     <div class="card-body">
         <table class="table table-hover">
@@ -21,9 +25,9 @@
             </thead>
             <tbody>
                 {% for m in members %}
-                <tr style="cursor: pointer;" onclick="window.location='/member/{{ m.MemberID }}'">
-                    <td><code>{{ m.MemberID }}</code></td>
-                    <td><strong>{{ m.Name }}</strong></td>
+                <tr class="member-row" style="cursor: pointer;" onclick="window.location='/member/{{ m.MemberID }}'">
+                    <td class="member-id"><code>{{ m.MemberID }}</code></td>
+                    <td><strong class="member-name">{{ m.Name }}</strong></td>
                     <td>{{ m.Occupation }}</td>
                     <td>{{ m.City }}</td>
                     <td><a href="/member/{{ m.MemberID }}" class="btn btn-sm btn-outline-primary">View History</a></td>
@@ -33,4 +37,20 @@
         </table>
     </div>
 </div>
+
+<script>
+    document.getElementById('memberSearch').addEventListener('input', function (e) {
+        const term = e.target.value.toLowerCase();
+        document.querySelectorAll('.member-row').forEach(row => {
+            const name = row.querySelector('.member-name').textContent.toLowerCase();
+            const id = row.querySelector('.member-id').textContent.toLowerCase();
+
+            if (name.includes(term) || id.includes(term)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock %}
