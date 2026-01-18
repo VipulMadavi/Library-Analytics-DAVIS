@@ -1,19 +1,19 @@
 MemberID,Name,Role,Department,Batch
-STU2023000,Aarav Sharma,Student,MBA,2023-2027
-STU2023001,Vivaan Patel,Student,Civil,2023-2027
-STU2023002,Aditya Vernekar,Student,MBA,2023-2027
-STU2023003,Vihaan Rao,Student,MBA,2023-2027
-STU2023004,Arjun Mehta,Student,MBA,2023-2027
-STU2023005,Sai Iyer,Student,MBA,2023-2027
-STU2023006,Reyansh Reddy,Student,Computer Science,2023-2027
-STU2023007,Ayaan Kumar,Student,Civil,2023-2027
-STU2023008,Krishna Das,Student,MBA,2023-2027
-STU2023009,Ishaan Nair,Student,Civil,2023-2027
-STU2023010,Diya Malhotra,Student,Civil,2023-2027
-STU2023011,Saanvi Shetty,Student,Electronics,2023-2027
-STU2023012,Ananya Joshi,Student,Computer Science,2023-2027
-STU2023013,Kiara Singh,Student,Civil,2023-2027
-STU2023014,Pari Kapoor,Student,Mechanical,2023-2027
-FAC100,Dr. R.K. Mishra,Faculty,MBA,Senior Professor
-FAC101,Prof. S. Deshpande,Faculty,Electronics,Senior Professor
-FAC102,Dr. A.P.J. Abdul,Faculty,Mechanical,Senior Professor
+M001,Rahul Patil,Student,Computer Engineering,2023
+M002,Ankita Deshmukh,Student,Information Technology,2023
+M003,Saurabh Kulkarni,Student,Computer Engineering,2022
+M004,Priyanka Joshi,Student,Electronics Engineering,2022
+M005,Omkar Jadhav,Student,Mechanical Engineering,2021
+M006,Tejaswini More,Student,Computer Engineering,2021
+M007,Rohan Malhotra,Research Scholar,Computer Engineering,2020
+M008,Dr. Amit Kulkarni,Faculty,Computer Engineering,NA
+M009,Smita Naik,Librarian,Library Science,NA
+M010,Aditya Chavan,Student,Civil Engineering,2023
+M011,Nikita Iyer,Student,Information Technology,2022
+M012,Ayush Tiwari,Student,Mechanical Engineering,2021
+M013,Shubham Verma,Student,Computer Engineering,2023
+M014,Pooja Singh,Student,Electronics Engineering,2022
+M015,Karan Mehta,Student,Information Technology,2021
+M016,Neeraj Pawar,Student,Computer Engineering,2021
+M017,Arvind Reddy,Student,Computer Engineering,2023
+M018,Kavya Sharma,Research Scholar,Electronics Engineering,2019

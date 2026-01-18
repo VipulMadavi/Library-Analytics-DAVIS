@@ -18,8 +18,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Occupation</th>
-                    <th>City</th>
+                    <th>Role</th>
+                    <th>Department</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -28,8 +28,8 @@
                 <tr class="member-row" style="cursor: pointer;" onclick="window.location='/member/{{ m.MemberID }}'">
                     <td class="member-id"><code>{{ m.MemberID }}</code></td>
                     <td><strong class="member-name">{{ m.Name }}</strong></td>
-                    <td>{{ m.Occupation }}</td>
-                    <td>{{ m.City }}</td>
+                    <td><span class="badge bg-secondary">{{ m.Role }}</span></td>
+                    <td>{{ m.Department }}</td>
                     <td><a href="/member/{{ m.MemberID }}" class="btn btn-sm btn-outline-primary">View History</a></td>
                 </tr>
                 {% endfor %}

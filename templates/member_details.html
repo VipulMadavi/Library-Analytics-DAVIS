@@ -22,12 +22,12 @@
                     👤
                 </div>
                 <h4>{{ member.Name }}</h4>
-                <p class="text-muted mb-1">{{ member.Occupation }}</p>
-                <p class="text-muted small">{{ member.City }}</p>
+                <span class="badge bg-info text-dark mb-2">{{ member.Role }}</span>
+                <p class="text-muted">{{ member.Department }}</p>
                 <hr>
                 <div class="text-start">
                     <p><strong>Member ID:</strong> <code>{{ member.MemberID }}</code></p>
-                    <p><strong>Age:</strong> {{ member.Age }}</p>
+                    <p><strong>Batch:</strong> {{ member.Batch }}</p>
                 </div>
             </div>
         </div>
