@@ -401,3 +401,28 @@ footer small {
     transform: scale(1.1);
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
+
+/* ===== AVATAR CIRCLE (Member Details) ===== */
+.avatar-circle {
+    width: 80px;
+    height: 80px;
+    font-size: 1.75rem;
+    font-weight: 700;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+}
+
+/* ===== PAGE TITLES ===== */
+.page-title {
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}

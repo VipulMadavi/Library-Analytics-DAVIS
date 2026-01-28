@@ -17,9 +17,8 @@
         <!-- Profile Card -->
         <div class="card mb-4">
             <div class="card-body text-center">
-                <div class="bg-light rounded-circle d-inline-flex justify-content-center align-items-center mb-3"
-                    style="width: 80px; height: 80px; font-size: 2rem;">
-                    👤
+                <div class="avatar-circle">
+                    {{ member.Name[:2]|upper }}
                 </div>
                 <h4>{{ member.Name }}</h4>
                 <span class="badge bg-info text-dark mb-2">{{ member.Role }}</span>
