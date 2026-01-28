@@ -8,9 +8,26 @@
 </div>
 
 <div class="card p-3 mb-4">
-    <div class="row align-items-center">
-        <div class="col-md-9">
-            <input type="text" id="memberSearch" class="form-control" placeholder="🔍 Search Member Name or ID...">
+    <div class="row g-3 align-items-center">
+        <div class="col-md-4">
+            <input type="text" id="memberSearch" class="form-control" placeholder="🔍 Search Name or ID...">
+        </div>
+        <div class="col-md-2">
+            <select id="roleFilter" class="form-select">
+                <option value="">All Roles</option>
+                <option value="Student">👨‍🎓 Student</option>
+                <option value="Faculty">👨‍🏫 Faculty</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select id="departmentFilter" class="form-select">
+                <option value="">All Departments</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Mechanical">Mechanical</option>
+                <option value="Civil">Civil</option>
+                <option value="Electronics">Electronics</option>
+                <option value="MBA">MBA</option>
+            </select>
         </div>
         <div class="col-md-3 text-end">
             <a href="/add_member" class="btn btn-success w-100">+ Add Member</a>
@@ -38,7 +55,7 @@
                         <td class="member-id"><code>{{ m.MemberID }}</code></td>
                         <td><strong class="member-name">{{ m.Name }}</strong></td>
                         <td><span class="badge bg-secondary">{{ m.Role }}</span></td>
-                        <td>{{ m.Department }}</td>
+                        <td class="member-dept">{{ m.Department }}</td>
                         <td>
                             <a href="/member/{{ m.MemberID }}" class="btn btn-sm btn-outline-primary">View</a>
                             <a href="/delete/member/{{ m.MemberID }}" class="btn btn-sm btn-outline-danger"
@@ -73,17 +90,29 @@
 </div>
 
 <script>
+    const searchInput = document.getElementById('memberSearch');
+    const roleFilter = document.getElementById('roleFilter');
+    const departmentFilter = document.getElementById('departmentFilter');
+    const rows = document.querySelectorAll('.member-row');
     const noResultsRow = document.getElementById('noResults');
 
-    document.getElementById('memberSearch').addEventListener('input', function (e) {
-        const term = e.target.value.toLowerCase();
+    function filterMembers() {
+        const term = searchInput.value.toLowerCase();
+        const role = roleFilter.value;
+        const dept = departmentFilter.value;
         let visibleCount = 0;
 
-        document.querySelectorAll('.member-row').forEach(row => {
+        rows.forEach(row => {
             const name = row.querySelector('.member-name').textContent.toLowerCase();
             const id = row.querySelector('.member-id').textContent.toLowerCase();
+            const rowRole = row.dataset.role;
+            const rowDept = row.dataset.dept;
 
-            if (name.includes(term) || id.includes(term)) {
+            const matchesSearch = name.includes(term) || id.includes(term);
+            const matchesRole = role === "" || rowRole === role;
+            const matchesDept = dept === "" || rowDept === dept;
+
+            if (matchesSearch && matchesRole && matchesDept) {
                 row.style.display = '';
                 visibleCount++;
             } else {
@@ -91,6 +120,10 @@
             }
         });
         noResultsRow.style.display = visibleCount === 0 ? '' : 'none';
-    });
+    }
+
+    searchInput.addEventListener('input', filterMembers);
+    roleFilter.addEventListener('change', filterMembers);
+    departmentFilter.addEventListener('change', filterMembers);
 </script>
 {% endblock %}

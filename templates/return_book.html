@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-7">
         <div class="card">
             <div class="card-header">
                 <h4 class="mb-0">📥 Return Book</h4>
@@ -13,13 +13,30 @@
                         <label for="book_id" class="form-label">Book ID</label>
                         <input type="text" class="form-control" id="book_id" name="book_id" placeholder="e.g. B001"
                             required autocomplete="off">
-                        <div id="book-preview" class="mt-2 text-muted small"></div>
+                        <div id="book-preview" class="mt-2 small"></div>
                     </div>
 
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-danger" id="submitBtn" disabled>Return Book</button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Return Book</button>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <!-- Issued Books Badge Cloud -->
+        <div class="card mt-4">
+            <div class="card-header bg-warning-subtle text-warning-emphasis">
+                <strong>📚 Currently Issued Books</strong> <small class="text-muted">(Click to select)</small>
+            </div>
+            <div class="card-body">
+                <div class="id-badge-cloud">
+                    {% for id in issued_ids %}
+                    <span class="id-badge badge bg-warning-subtle text-warning-emphasis"
+                        onclick="selectBook('{{ id }}')">{{ id }}</span>
+                    {% else %}
+                    <p class="text-muted mb-0">No books currently issued.</p>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
@@ -30,28 +47,51 @@
     const preview = document.getElementById('book-preview');
     const submitBtn = document.getElementById('submitBtn');
 
-    bookInput.addEventListener('blur', async () => {
+    // Debounce utility
+    function debounce(fn, delay) {
+        let timer;
+        return function (...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+    }
+
+    // Click-to-select badge
+    function selectBook(id) {
+        bookInput.value = id;
+        checkBook();
+        bookInput.focus();
+    }
+
+    async function checkBook() {
         const id = bookInput.value.trim();
-        if (!id) return;
+        if (!id) {
+            preview.innerHTML = '';
+            submitBtn.disabled = true;
+            return;
+        }
 
         try {
             const res = await fetch(`/api/book/${id}`);
             if (res.ok) {
                 const data = await res.json();
                 if (data.Status === 'Issued') {
-                    preview.innerHTML = `<div class="alert alert-success">📚 <strong>${data.Title}</strong> by ${data.Author}</div>`;
+                    preview.innerHTML = `<div class="text-success">✅ <strong>${data.Title}</strong> by ${data.Author}</div>`;
                     submitBtn.disabled = false;
                 } else if (data.Status === 'Available') {
-                    preview.innerHTML = `<div class="alert alert-warning">⚠️ Book is already marked as <strong>Available</strong>.</div>`;
+                    preview.innerHTML = `<div class="text-warning">⚠️ Book is already <strong>Available</strong>.</div>`;
                     submitBtn.disabled = true;
                 }
             } else {
-                preview.innerHTML = `<div class="alert alert-danger">❌ Book ID not found.</div>`;
+                preview.innerHTML = `<div class="text-danger">❌ Book ID not found.</div>`;
                 submitBtn.disabled = true;
             }
         } catch (e) {
             console.error(e);
         }
-    });
+    }
+
+    // Real-time validation with debounce
+    bookInput.addEventListener('input', debounce(checkBook, 300));
 </script>
 {% endblock %}

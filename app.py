@@ -52,8 +52,12 @@ def return_page():
         else:
             flash(message, 'danger')
             return redirect(url_for('return_page'))
-            
-    return render_template('return_book.html')
+    
+    # GET request: Load issued books for reference
+    books, _, _ = load_data()
+    issued_ids = books[books['Status'] == 'Issued']['BookID'].tolist()
+    
+    return render_template('return_book.html', issued_ids=issued_ids)
 
 @app.route('/add_book', methods=['GET', 'POST'])
 def add_book_page():

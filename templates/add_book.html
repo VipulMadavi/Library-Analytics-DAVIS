@@ -6,10 +6,12 @@
         <div class="card">
             <div class="card-header">📕 Add New Book</div>
             <div class="card-body">
-                <form action="/add_book" method="POST">
+                <form action="/add_book" method="POST" id="addBookForm">
                     <div class="mb-3">
                         <label class="form-label">Book ID</label>
-                        <input type="text" name="book_id" class="form-control" placeholder="e.g. LIB2001" required>
+                        <input type="text" name="book_id" id="book_id" class="form-control" placeholder="e.g. LIB2001"
+                            required autocomplete="off">
+                        <div id="id-preview" class="mt-2 small"></div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Title</label>
@@ -29,11 +31,45 @@
                             <option value="MBA">MBA</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success w-100">Add Book</button>
+                    <button type="submit" class="btn btn-success w-100" id="submitBtn">Add Book</button>
                     <a href="/books" class="btn btn-outline-secondary w-100 mt-2">Cancel</a>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const idInput = document.getElementById('book_id');
+    const preview = document.getElementById('id-preview');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function debounce(fn, delay) {
+        let timer;
+        return function (...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+    }
+
+    async function checkId() {
+        const id = idInput.value.trim();
+        if (!id) {
+            preview.innerHTML = '';
+            submitBtn.disabled = false;
+            return;
+        }
+
+        const res = await fetch(`/api/book/${id}`);
+        if (res.ok) {
+            preview.innerHTML = `<div class="text-danger">❌ Book ID already exists!</div>`;
+            submitBtn.disabled = true;
+        } else {
+            preview.innerHTML = `<div class="text-success">✅ ID is available</div>`;
+            submitBtn.disabled = false;
+        }
+    }
+
+    idInput.addEventListener('input', debounce(checkId, 300));
+</script>
 {% endblock %}
