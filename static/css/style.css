@@ -14,15 +14,16 @@
     --warning: #E06C00;
     /* Orange */
     --warning-light: #f08a2d;
-    --danger: #78290F;
-    /* Brown red */
+    --danger: #9E3A1A;
+    /* Lighter brown-red for better visibility */
+    --danger-dark: #78290F;
+    /* Original for hover states */
     --info: #ACD2ED;
     /* Light blue */
     --info-light: #c5e0f5;
 
-    /* Accent */
+    /* Accent - Rose */
     --accent: #C94057;
-    /* Rose */
     --accent-light: #e05a70;
 
     /* Backgrounds & Text */
@@ -437,4 +438,63 @@ footer small {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+
+/* ===== NAVBAR STYLING ===== */
+.navbar {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--card-shadow);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: var(--primary) !important;
+}
+
+.nav-link {
+    color: var(--text-dark) !important;
+    font-weight: 500;
+    transition: all var(--transition-smooth);
+    border-radius: 6px;
+    margin: 0 2px;
+}
+
+.nav-link:hover {
+    color: var(--accent) !important;
+    background: rgba(201, 64, 87, 0.1);
+}
+
+.navbar-toggler {
+    border-color: var(--primary);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%2315616D' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* ===== DELETE BUTTON STYLING ===== */
+.btn-outline-danger {
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--danger);
+    border-color: var(--danger-dark);
+    color: white;
+}
+
+/* ===== ACCENT BUTTON ===== */
+.btn-accent {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+.btn-accent:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+    color: white;
 }

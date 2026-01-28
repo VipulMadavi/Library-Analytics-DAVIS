@@ -15,31 +15,35 @@
 
 <body>
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 rounded">
+        <nav class="navbar navbar-expand-lg mb-4 rounded">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">📚 Library Analytics</a>
-                <div class="collapse navbar-collapse">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Dashboard</a>
+                            <a class="nav-link" href="/" aria-label="View Dashboard">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/books">Inventory</a>
+                            <a class="nav-link" href="/books" aria-label="View Book Inventory">Inventory</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/members">Members</a>
+                            <a class="nav-link" href="/members" aria-label="View Members Directory">Members</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/issue">Issue Book</a>
+                            <a class="nav-link" href="/issue" aria-label="Issue a Book">Issue Book</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/return">Return Book</a>
+                            <a class="nav-link" href="/return" aria-label="Return a Book">Return Book</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/add_book">+ Book</a>
+                            <a class="nav-link" href="/add_book" aria-label="Add New Book">+ Book</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/add_member">+ Member</a>
+                            <a class="nav-link" href="/add_member" aria-label="Add New Member">+ Member</a>
                         </li>
                     </ul>
                 </div>
@@ -60,6 +64,8 @@
             <small>&copy; 2026 Library Insights MVP</small>
         </footer>
     </div>
+    <!-- Bootstrap JS Bundle for navbar toggle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
