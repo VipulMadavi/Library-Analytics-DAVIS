@@ -18,18 +18,18 @@
     /* Lighter brown-red for better visibility */
     --danger-dark: #78290F;
     /* Original for hover states */
-    --info: #ACD2ED;
-    /* Light blue */
-    --info-light: #c5e0f5;
+    --info: #77AF9C;
+    /* Sage - better harmony */
+    --info-light: #8fc4b3;
 
     /* Accent - Rose */
     --accent: #C94057;
     --accent-light: #e05a70;
 
     /* Backgrounds & Text */
-    --bg-light: #FFDDAD;
-    /* Cream */
-    --bg-cream: #FFDDAD;
+    --bg-light: #FDF6E3;
+    /* Softer warm ivory */
+    --bg-cream: #FDF6E3;
     --bg-card: rgba(255, 255, 255, 0.92);
     --text-dark: #001524;
     /* Dark navy */
@@ -194,7 +194,14 @@ body {
 
 .kpi-card.bg-info {
     background: var(--gradient-info) !important;
-    box-shadow: 0 10px 30px -10px rgba(79, 172, 254, 0.5);
+    box-shadow: 0 10px 30px -10px rgba(119, 175, 156, 0.5);
+}
+
+/* Issued Card - Rose accent for better visual balance */
+.kpi-card.kpi-issued {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%) !important;
+    box-shadow: 0 10px 30px -10px rgba(201, 64, 87, 0.5);
+    color: white;
 }
 
 /* ===== CARDS ===== */
