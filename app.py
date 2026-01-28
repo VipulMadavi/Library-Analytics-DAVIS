@@ -7,7 +7,6 @@ app.secret_key = 'super_secret_key_for_demo_mvp'
 
 @app.route('/')
 def dashboard():
-    print("DEBUG: Dashboard Accessed - App Version with Add Routes")
     books, members, transactions = load_data()
     
     # Calculate Metrics
