@@ -5,6 +5,18 @@ from utils.analytics import calculate_kpis, generate_charts
 app = Flask(__name__)
 app.secret_key = 'super_secret_key_for_demo_mvp'
 
+# Shared constants
+DEPARTMENTS = ['Computer Science', 'Mechanical', 'Civil', 'Electronics', 'MBA']
+ROLES = ['Student', 'Faculty']
+
+@app.context_processor
+def inject_globals():
+    """Inject global variables into all templates."""
+    return {
+        'departments': DEPARTMENTS,
+        'roles': ROLES
+    }
+
 @app.route('/')
 def dashboard():
     books, members, transactions = load_data()

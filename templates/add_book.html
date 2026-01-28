@@ -24,11 +24,9 @@
                     <div class="mb-3">
                         <label class="form-label">Department</label>
                         <select name="department" class="form-select" required>
-                            <option value="Computer Science">Computer Science</option>
-                            <option value="Mechanical">Mechanical</option>
-                            <option value="Civil">Civil</option>
-                            <option value="Electronics">Electronics</option>
-                            <option value="MBA">MBA</option>
+                            {% for dept in departments %}
+                            <option value="{{ dept }}">{{ dept }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <button type="submit" class="btn btn-success w-100" id="submitBtn">Add Book</button>

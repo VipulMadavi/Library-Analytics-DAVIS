@@ -2,40 +2,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    /* Primary Palette */
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --primary-light: #818cf8;
+    /* Primary Palette - Teal */
+    --primary: #15616D;
+    --primary-dark: #0d4a54;
+    --primary-light: #1d7a89;
 
-    /* Status Colors */
-    --success: #10b981;
-    --success-light: #34d399;
-    --warning: #f59e0b;
-    --warning-light: #fbbf24;
-    --danger: #ef4444;
-    --info: #0ea5e9;
-    --info-light: #38bdf8;
+    /* Status Colors - From User Palette */
+    --success: #77AF9C;
+    /* Sage green */
+    --success-light: #8fc4b3;
+    --warning: #E06C00;
+    /* Orange */
+    --warning-light: #f08a2d;
+    --danger: #78290F;
+    /* Brown red */
+    --info: #ACD2ED;
+    /* Light blue */
+    --info-light: #c5e0f5;
+
+    /* Accent */
+    --accent: #C94057;
+    /* Rose */
+    --accent-light: #e05a70;
 
     /* Backgrounds & Text */
-    --bg-light: #f1f5f9;
-    --bg-card: rgba(255, 255, 255, 0.85);
-    --text-dark: #1e293b;
-    --text-muted: #64748b;
+    --bg-light: #FFDDAD;
+    /* Cream */
+    --bg-cream: #FFDDAD;
+    --bg-card: rgba(255, 255, 255, 0.92);
+    --text-dark: #001524;
+    /* Dark navy */
+    --text-muted: #3d5a6c;
 
     /* Glassmorphism */
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.3);
-    --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(21, 97, 109, 0.2);
+    --glass-shadow: 0 8px 32px rgba(0, 21, 36, 0.15);
 
     /* Shadows */
-    --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --card-shadow-hover: 0 20px 40px -10px rgba(99, 102, 241, 0.3);
+    --card-shadow: 0 4px 6px -1px rgba(0, 21, 36, 0.1), 0 2px 4px -2px rgba(0, 21, 36, 0.1);
+    --card-shadow-hover: 0 20px 40px -10px rgba(21, 97, 109, 0.3);
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-success: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-    --gradient-warning: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --gradient-info: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    /* Gradients - Teal based */
+    --gradient-primary: linear-gradient(135deg, #15616D 0%, #1d7a89 50%, #77AF9C 100%);
+    --gradient-success: linear-gradient(135deg, #77AF9C 0%, #8fc4b3 100%);
+    --gradient-warning: linear-gradient(135deg, #E06C00 0%, #f08a2d 100%);
+    --gradient-info: linear-gradient(135deg, #ACD2ED 0%, #15616D 100%);
 
     /* Animation */
     --transition-fast: 0.2s ease;
@@ -45,7 +57,7 @@
 /* Base Styles */
 body {
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+    background: linear-gradient(135deg, var(--bg-cream) 0%, #f5ebe0 100%);
     background-attachment: fixed;
     color: var(--text-dark);
     min-height: 100vh;
