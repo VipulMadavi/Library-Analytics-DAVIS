@@ -1,38 +1,17 @@
 import pandas as pd
 import os
 from datetime import datetime
+from pathlib import Path
 
-DATA_DIR = os.path.join(os.getcwd(), 'data')
-BOOKS_FILE = os.path.join(DATA_DIR, 'books.csv')
-TRANSACTIONS_FILE = os.path.join(DATA_DIR, 'transactions.csv')
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR / 'data'
+BOOKS_FILE = DATA_DIR / 'books.csv'
+TRANSACTIONS_FILE = DATA_DIR / 'transactions.csv'
 
 def repair_data():
-    print("Reparing Data Integrity...")
+    print("Repairing data integrity...")
     books = pd.read_csv(BOOKS_FILE)
     transactions = pd.read_csv(TRANSACTIONS_FILE)
-    
-    # 1. Inject Active Loans (so the tab isn't empty)
-    # Issue B002 to M001
-    new_tx_1 = {
-        "TransactionID": "T_FIX_01",
-        "BookID": "B002",
-        "MemberID": "M001",
-        "Date": datetime.now().strftime('%Y-%m-%d'),
-        "Action": "Issue"
-    }
-    # Issue B004 to M001
-    new_tx_2 = {
-        "TransactionID": "T_FIX_02",
-        "BookID": "B004",
-        "MemberID": "M001",
-        "Date": datetime.now().strftime('%Y-%m-%d'),
-        "Action": "Issue"
-    }
-    
-    # Check if already exists to avoid duplicates on re-run
-    if "T_FIX_01" not in transactions['TransactionID'].values:
-        transactions = pd.concat([transactions, pd.DataFrame([new_tx_1, new_tx_2])], ignore_index=True)
-        print("-> Injected 2 Active Loans for M001 (B002, B004)")
     
     # 2. Sync Book Status based on Last Transaction
     for idx, row in books.iterrows():

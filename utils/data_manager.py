@@ -1,11 +1,13 @@
 import pandas as pd
 import os
 from datetime import datetime
+from pathlib import Path
 
-DATA_DIR = os.path.join(os.getcwd(), 'data')
-BOOKS_FILE = os.path.join(DATA_DIR, 'books.csv')
-MEMBERS_FILE = os.path.join(DATA_DIR, 'members.csv')
-TRANSACTIONS_FILE = os.path.join(DATA_DIR, 'transactions.csv')
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR / 'data'
+BOOKS_FILE = DATA_DIR / 'books.csv'
+MEMBERS_FILE = DATA_DIR / 'members.csv'
+TRANSACTIONS_FILE = DATA_DIR / 'transactions.csv'
 
 def load_data():
     """Loads all CSVs into DataFrames"""

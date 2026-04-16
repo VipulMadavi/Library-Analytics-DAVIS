@@ -1,129 +1,142 @@
-{% extends "layout.html" %}
-
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <div class="row mb-4">
-    <div class="col-md-12">
-        <h2 class="page-title">👥 Members Directory</h2>
-    </div>
+  <div class="col-md-12">
+    <h2 class="page-title">👥 Members Directory</h2>
+  </div>
 </div>
 
-<div class="card p-3 mb-4">
-    <div class="row g-3 align-items-center">
-        <div class="col-md-4">
-            <input type="text" id="memberSearch" class="form-control" placeholder="🔍 Search Name or ID...">
-        </div>
-        <div class="col-md-2">
-            <select id="roleFilter" class="form-select">
-                <option value="">All Roles</option>
-                <option value="Student">👨‍🎓 Student</option>
-                <option value="Faculty">👨‍🏫 Faculty</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <select id="departmentFilter" class="form-select">
-                <option value="">All Departments</option>
-                <option value="Computer Science">Computer Science</option>
-                <option value="Mechanical">Mechanical</option>
-                <option value="Civil">Civil</option>
-                <option value="Electronics">Electronics</option>
-                <option value="MBA">MBA</option>
-            </select>
-        </div>
-        <div class="col-md-3 text-end">
-            <a href="/add_member" class="btn btn-success w-100">+ Add Member</a>
-        </div>
+<form class="card p-3 mb-4" method="GET" action="{{ url_for('members_page') }}">
+  <div class="row g-3 align-items-center">
+    <div class="col-md-4">
+      <input
+        type="text"
+        name="q"
+        id="memberSearch"
+        class="form-control"
+        placeholder="🔍 Search Name, ID, Role..."
+        value="{{ query|default('') }}"
+      />
     </div>
+    <div class="col-md-2">
+      <select name="role" id="roleFilter" class="form-select">
+        <option value="">All Roles</option>
+        {% for role in roles %}
+        <option
+          value="{{ role }}"
+          {% if role_filter == role %}selected{% endif %}
+        >
+          {{ role }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select name="department" id="departmentFilter" class="form-select">
+        <option value="">All Departments</option>
+        {% for dept in departments %}
+        <option
+          value="{{ dept }}"
+          {% if department_filter == dept %}selected{% endif %}
+        >
+          {{ dept }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3 text-end d-grid gap-2">
+      <button type="submit" class="btn btn-primary">Search</button>
+      <a href="{{ url_for('members_page') }}" class="btn btn-outline-secondary"
+        >Reset</a
+      >
+      <a href="/add_member" class="btn btn-success">+ Add Member</a>
+    </div>
+  </div>
+</form>
+
+<div class="mb-3 text-muted small">
+  Search and filters apply to the full member list before pagination.
 </div>
 
 <div class="card">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Role</th>
-                        <th>Department</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for m in members %}
-                    <tr class="member-row" data-role="{{ m.Role }}" data-dept="{{ m.Department }}"
-                        style="cursor: pointer;" onclick="window.location='/member/{{ m.MemberID }}'">
-                        <td class="member-id"><code>{{ m.MemberID }}</code></td>
-                        <td><strong class="member-name">{{ m.Name }}</strong></td>
-                        <td><span class="badge bg-secondary">{{ m.Role }}</span></td>
-                        <td class="member-dept">{{ m.Department }}</td>
-                        <td>
-                            <a href="/member/{{ m.MemberID }}" class="btn btn-sm btn-outline-primary">View</a>
-                            <a href="/delete/member/{{ m.MemberID }}" class="btn btn-sm btn-outline-danger"
-                                onclick="event.stopPropagation(); return confirm('Delete member {{ m.Name }}?');">Del</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    <tr id="noResults" style="display: none;">
-                        <td colspan="5" class="text-center text-muted py-4">No members found matching your criteria.
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Pagination control -->
-        <div class="d-flex justify-content-between align-items-center mt-3">
-            <div>
-                {% if has_prev %}
-                <a href="{{ url_for('members_page', page=page-1) }}" class="btn btn-sm btn-outline-secondary">←
-                    Previous</a>
-                {% endif %}
-            </div>
-            <span class="text-muted">Page {{ page }}</span>
-            <div>
-                {% if has_next %}
-                <a href="{{ url_for('members_page', page=page+1) }}" class="btn btn-sm btn-outline-secondary">Next →</a>
-                {% endif %}
-            </div>
-        </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Department</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in members %}
+          <tr
+            class="member-row"
+            data-role="{{ m.Role }}"
+            data-dept="{{ m.Department }}"
+            style="cursor: pointer"
+            onclick="window.location='/member/{{ m.MemberID }}'"
+          >
+            <td class="member-id"><code>{{ m.MemberID }}</code></td>
+            <td><strong class="member-name">{{ m.Name }}</strong></td>
+            <td><span class="badge bg-secondary">{{ m.Role }}</span></td>
+            <td class="member-dept">{{ m.Department }}</td>
+            <td>
+              <a
+                href="/member/{{ m.MemberID }}"
+                class="btn btn-sm btn-outline-primary"
+                >View</a
+              >
+              <form
+                action="/delete/member/{{ m.MemberID }}"
+                method="POST"
+                class="d-inline"
+                onsubmit="return confirm('Delete member {{ m.Name }}?');"
+              >
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-outline-danger"
+                  onclick="event.stopPropagation()"
+                >
+                  Del
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+          <tr id="noResults" style="display: none">
+            <td colspan="5" class="text-center text-muted py-4">
+              No members found matching your criteria.
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
+    <!-- Pagination control -->
+    <div class="d-flex justify-content-between align-items-center mt-3">
+      <div>
+        {% if has_prev %}
+        <a
+          href="{{ url_for('members_page', page=page-1, q=query, role=role_filter, department=department_filter) }}"
+          class="btn btn-sm btn-outline-secondary"
+          >← Previous</a
+        >
+        {% endif %}
+      </div>
+      <span class="text-muted">Page {{ page }}</span>
+      <div>
+        {% if has_next %}
+        <a
+          href="{{ url_for('members_page', page=page+1, q=query, role=role_filter, department=department_filter) }}"
+          class="btn btn-sm btn-outline-secondary"
+          >Next →</a
+        >
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </div>
-
-<script>
-    const searchInput = document.getElementById('memberSearch');
-    const roleFilter = document.getElementById('roleFilter');
-    const departmentFilter = document.getElementById('departmentFilter');
-    const rows = document.querySelectorAll('.member-row');
-    const noResultsRow = document.getElementById('noResults');
-
-    function filterMembers() {
-        const term = searchInput.value.toLowerCase();
-        const role = roleFilter.value;
-        const dept = departmentFilter.value;
-        let visibleCount = 0;
-
-        rows.forEach(row => {
-            const name = row.querySelector('.member-name').textContent.toLowerCase();
-            const id = row.querySelector('.member-id').textContent.toLowerCase();
-            const rowRole = row.dataset.role;
-            const rowDept = row.dataset.dept;
-
-            const matchesSearch = name.includes(term) || id.includes(term);
-            const matchesRole = role === "" || rowRole === role;
-            const matchesDept = dept === "" || rowDept === dept;
-
-            if (matchesSearch && matchesRole && matchesDept) {
-                row.style.display = '';
-                visibleCount++;
-            } else {
-                row.style.display = 'none';
-            }
-        });
-        noResultsRow.style.display = visibleCount === 0 ? '' : 'none';
-    }
-
-    searchInput.addEventListener('input', filterMembers);
-    roleFilter.addEventListener('change', filterMembers);
-    departmentFilter.addEventListener('change', filterMembers);
-</script>
 {% endblock %}

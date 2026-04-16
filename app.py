@@ -12,9 +12,17 @@ ROLES = ['Student', 'Faculty']
 @app.context_processor
 def inject_globals():
     """Inject global variables into all templates."""
+    books, members, _ = load_data()
+
+    departments = sorted(
+        set(books['Department'].dropna().astype(str).tolist())
+        | set(members['Department'].dropna().astype(str).tolist())
+    )
+    roles = sorted(members['Role'].dropna().astype(str).unique().tolist())
+
     return {
-        'departments': DEPARTMENTS,
-        'roles': ROLES
+        'departments': departments,
+        'roles': roles
     }
 
 @app.route('/')
@@ -48,8 +56,9 @@ def issue_page():
     # GET request: Load available books for reference
     books, _, _ = load_data()
     available_ids = books[books['Status'] == 'Available']['BookID'].tolist()
+    prefill_book_id = request.args.get('book_id', '').strip()
     
-    return render_template('issue_book.html', available_ids=available_ids)
+    return render_template('issue_book.html', available_ids=available_ids, prefill_book_id=prefill_book_id)
 
 @app.route('/return', methods=['GET', 'POST'])
 def return_page():
@@ -114,8 +123,23 @@ def add_member_page():
 def books_page():
     books, _, _ = load_data()
     
-    # Filter by Status if provided
+    # Filter by query params if provided
+    search_query = request.args.get('q', '', type=str).strip()
+    department_filter = request.args.get('department', '', type=str).strip()
     status_filter = request.args.get('status')
+
+    if search_query:
+        search_mask = (
+            books['BookID'].astype(str).str.contains(search_query, case=False, na=False)
+            | books['Title'].astype(str).str.contains(search_query, case=False, na=False)
+            | books['Author'].astype(str).str.contains(search_query, case=False, na=False)
+            | books['Department'].astype(str).str.contains(search_query, case=False, na=False)
+        )
+        books = books[search_mask]
+
+    if department_filter:
+        books = books[books['Department'] == department_filter]
+
     if status_filter:
         books = books[books['Status'] == status_filter]
     
@@ -131,11 +155,39 @@ def books_page():
     has_next = end < total
     has_prev = page > 1
         
-    return render_template('books.html', books=paginated_books, filter=status_filter, page=page, has_next=has_next, has_prev=has_prev)
+    return render_template(
+        'books.html',
+        books=paginated_books,
+        filter=status_filter,
+        query=search_query,
+        department_filter=department_filter,
+        page=page,
+        has_next=has_next,
+        has_prev=has_prev,
+    )
 
 @app.route('/members')
 def members_page():
     _, members, _ = load_data()
+
+    search_query = request.args.get('q', '', type=str).strip()
+    role_filter = request.args.get('role', '', type=str).strip()
+    department_filter = request.args.get('department', '', type=str).strip()
+
+    if search_query:
+        search_mask = (
+            members['MemberID'].astype(str).str.contains(search_query, case=False, na=False)
+            | members['Name'].astype(str).str.contains(search_query, case=False, na=False)
+            | members['Role'].astype(str).str.contains(search_query, case=False, na=False)
+            | members['Department'].astype(str).str.contains(search_query, case=False, na=False)
+        )
+        members = members[search_mask]
+
+    if role_filter:
+        members = members[members['Role'] == role_filter]
+
+    if department_filter:
+        members = members[members['Department'] == department_filter]
     
     # Pagination
     page = request.args.get('page', 1, type=int)
@@ -149,9 +201,18 @@ def members_page():
     has_next = end < total
     has_prev = page > 1
     
-    return render_template('members.html', members=paginated_members, page=page, has_next=has_next, has_prev=has_prev)
+    return render_template(
+        'members.html',
+        members=paginated_members,
+        query=search_query,
+        role_filter=role_filter,
+        department_filter=department_filter,
+        page=page,
+        has_next=has_next,
+        has_prev=has_prev,
+    )
 
-@app.route('/delete/book/<book_id>')
+@app.route('/delete/book/<book_id>', methods=['POST'])
 def delete_book_route(book_id):
     from utils.data_manager import delete_book
     success, msg = delete_book(book_id)
@@ -161,7 +222,7 @@ def delete_book_route(book_id):
         flash(msg, 'danger')
     return redirect(url_for('books_page'))
 
-@app.route('/delete/member/<member_id>')
+@app.route('/delete/member/<member_id>', methods=['POST'])
 def delete_member_route(member_id):
     from utils.data_manager import delete_member
     success, msg = delete_member(member_id)
@@ -184,7 +245,14 @@ def member_details(member_id):
     history = get_member_history(member_id)
     current_loans = get_member_current_loans(member_id)
     
-    return render_template('member_details.html', member=member.iloc[0].to_dict(), history=history, current_loans=current_loans)
+    return render_template(
+        'member_details.html',
+        member=member.iloc[0].to_dict(),
+        history=history,
+        current_loans=current_loans,
+        current_loans_count=len(current_loans),
+        history_count=len(history),
+    )
 
 # --- API Endpoints ---
 @app.route('/api/book/<book_id>')
